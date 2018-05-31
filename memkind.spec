@@ -4,12 +4,15 @@
 #
 Name     : memkind
 Version  : 1.7.0
-Release  : 1
+Release  : 2
 URL      : https://github.com/memkind/memkind/archive/v1.7.0.tar.gz
 Source0  : https://github.com/memkind/memkind/archive/v1.7.0.tar.gz
 Summary  : A general purpose malloc(3) implementation that emphasizes fragmentation avoidance and scalable concurrency support.
 Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause
+Requires: memkind-bin
+Requires: memkind-lib
+Requires: memkind-doc
 BuildRequires : numactl-dev
 
 %description
@@ -18,13 +21,39 @@ MEMKIND
 [![Build Status](https://travis-ci.org/memkind/memkind.svg)](https://travis-ci.org/memkind/memkind)
 [![MEMKIND version](https://img.shields.io/github/tag/memkind/memkind.svg)](https://github.com/memkind/memkind/releases/latest)
 
+%package bin
+Summary: bin components for the memkind package.
+Group: Binaries
+
+%description bin
+bin components for the memkind package.
+
+
 %package dev
 Summary: dev components for the memkind package.
 Group: Development
+Requires: memkind-lib
+Requires: memkind-bin
 Provides: memkind-devel
 
 %description dev
 dev components for the memkind package.
+
+
+%package doc
+Summary: doc components for the memkind package.
+Group: Documentation
+
+%description doc
+doc components for the memkind package.
+
+
+%package lib
+Summary: lib components for the memkind package.
+Group: Libraries
+
+%description lib
+lib components for the memkind package.
 
 
 %prep
@@ -35,51 +64,48 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1527788676
-make  %{?_smp_mflags} & ./build.sh
+export SOURCE_DATE_EPOCH=1527800688
+make  %{?_smp_mflags} || ./build.sh --prefix=/usr
 
 %install
-export SOURCE_DATE_EPOCH=1527788676
+export SOURCE_DATE_EPOCH=1527800688
 rm -rf %{buildroot}
 %make_install
 
 %files
 %defattr(-,root,root,-)
-/usr/local/bin/memkind-hbw-nodes
-/usr/local/lib/libautohbw.so
-/usr/local/lib/libautohbw.so.0
-/usr/local/lib/libautohbw.so.0.0.0
-/usr/local/lib/libmemkind.so
-/usr/local/lib/libmemkind.so.0
-/usr/local/lib/libmemkind.so.0.0.1
-/usr/local/share/doc/memkind/COPYING
-/usr/local/share/doc/memkind/README
-/usr/local/share/doc/memkind/VERSION
-/usr/local/share/man/man3/hbwallocator.3
-/usr/local/share/man/man3/hbwmalloc.3
-/usr/local/share/man/man3/memkind.3
-/usr/local/share/man/man3/memkind_arena.3
-/usr/local/share/man/man3/memkind_default.3
-/usr/local/share/man/man3/memkind_hbw.3
-/usr/local/share/man/man3/memkind_hugetlb.3
-/usr/local/share/man/man3/memkind_pmem.3
+
+%files bin
+%defattr(-,root,root,-)
+/usr/bin/memkind-hbw-nodes
 
 %files dev
 %defattr(-,root,root,-)
-/usr/local/include/hbw_allocator.h
-/usr/local/include/hbwmalloc.h
-/usr/local/include/memkind.h
-/usr/local/include/memkind/internal/heap_manager.h
-/usr/local/include/memkind/internal/memkind_arena.h
-/usr/local/include/memkind/internal/memkind_default.h
-/usr/local/include/memkind/internal/memkind_gbtlb.h
-/usr/local/include/memkind/internal/memkind_hbw.h
-/usr/local/include/memkind/internal/memkind_hugetlb.h
-/usr/local/include/memkind/internal/memkind_interleave.h
-/usr/local/include/memkind/internal/memkind_log.h
-/usr/local/include/memkind/internal/memkind_pmem.h
-/usr/local/include/memkind/internal/memkind_private.h
-/usr/local/include/memkind/internal/memkind_regular.h
-/usr/local/include/memkind/internal/tbb_mem_pool_policy.h
-/usr/local/include/memkind/internal/tbb_wrapper.h
-/usr/local/include/memkind_deprecated.h
+/usr/include/*.h
+/usr/include/memkind/internal/heap_manager.h
+/usr/include/memkind/internal/memkind_arena.h
+/usr/include/memkind/internal/memkind_default.h
+/usr/include/memkind/internal/memkind_gbtlb.h
+/usr/include/memkind/internal/memkind_hbw.h
+/usr/include/memkind/internal/memkind_hugetlb.h
+/usr/include/memkind/internal/memkind_interleave.h
+/usr/include/memkind/internal/memkind_log.h
+/usr/include/memkind/internal/memkind_pmem.h
+/usr/include/memkind/internal/memkind_private.h
+/usr/include/memkind/internal/memkind_regular.h
+/usr/include/memkind/internal/tbb_mem_pool_policy.h
+/usr/include/memkind/internal/tbb_wrapper.h
+/usr/lib/libautohbw.so
+/usr/lib/libmemkind.so
+
+%files doc
+%defattr(-,root,root,-)
+%doc /usr/share/doc/memkind/*
+%doc /usr/share/man/man3/*
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib/libautohbw.so.0
+/usr/lib/libautohbw.so.0.0.0
+/usr/lib/libmemkind.so.0
+/usr/lib/libmemkind.so.0.0.1
