@@ -4,7 +4,7 @@
 #
 Name     : memkind
 Version  : 1.7.0
-Release  : 2
+Release  : 3
 URL      : https://github.com/memkind/memkind/archive/v1.7.0.tar.gz
 Source0  : https://github.com/memkind/memkind/archive/v1.7.0.tar.gz
 Summary  : A general purpose malloc(3) implementation that emphasizes fragmentation avoidance and scalable concurrency support.
@@ -64,11 +64,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1527800688
-make  %{?_smp_mflags} || ./build.sh --prefix=/usr
+export SOURCE_DATE_EPOCH=1528132335
+make  %{?_smp_mflags} || ./build.sh --prefix=/usr --libdir=/usr/lib64
 
 %install
-export SOURCE_DATE_EPOCH=1527800688
+export SOURCE_DATE_EPOCH=1528132335
 rm -rf %{buildroot}
 %make_install
 
@@ -95,8 +95,8 @@ rm -rf %{buildroot}
 /usr/include/memkind/internal/memkind_regular.h
 /usr/include/memkind/internal/tbb_mem_pool_policy.h
 /usr/include/memkind/internal/tbb_wrapper.h
-/usr/lib/libautohbw.so
-/usr/lib/libmemkind.so
+/usr/lib64/libautohbw.so
+/usr/lib64/libmemkind.so
 
 %files doc
 %defattr(-,root,root,-)
@@ -105,7 +105,7 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib/libautohbw.so.0
-/usr/lib/libautohbw.so.0.0.0
-/usr/lib/libmemkind.so.0
-/usr/lib/libmemkind.so.0.0.1
+/usr/lib64/libautohbw.so.0
+/usr/lib64/libautohbw.so.0.0.0
+/usr/lib64/libmemkind.so.0
+/usr/lib64/libmemkind.so.0.0.1
