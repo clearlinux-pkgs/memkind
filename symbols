@@ -12,6 +12,7 @@ libmemkind.so.0:hbw_check_available
 libmemkind.so.0:hbw_free
 libmemkind.so.0:hbw_get_policy
 libmemkind.so.0:hbw_malloc
+libmemkind.so.0:hbw_malloc_usable_size
 libmemkind.so.0:hbw_posix_memalign
 libmemkind.so.0:hbw_posix_memalign_psize
 libmemkind.so.0:hbw_realloc
@@ -26,7 +27,6 @@ libmemkind.so.0:memkind_arena_free
 libmemkind.so.0:memkind_arena_free_with_kind_detect
 libmemkind.so.0:memkind_arena_malloc
 libmemkind.so.0:memkind_arena_malloc_usable_size
-libmemkind.so.0:memkind_arena_pmem_calloc
 libmemkind.so.0:memkind_arena_posix_memalign
 libmemkind.so.0:memkind_arena_realloc
 libmemkind.so.0:memkind_arena_realloc_with_kind_detect
@@ -42,11 +42,11 @@ libmemkind.so.0:memkind_config_set_size
 libmemkind.so.0:memkind_create_kind
 libmemkind.so.0:memkind_create_pmem
 libmemkind.so.0:memkind_create_pmem_with_config
+libmemkind.so.0:memkind_dax_kmem_all_get_mbind_nodemask
 libmemkind.so.0:memkind_default_calloc
 libmemkind.so.0:memkind_default_create
 libmemkind.so.0:memkind_default_destroy
 libmemkind.so.0:memkind_default_free
-libmemkind.so.0:memkind_default_get_defrag_hint
 libmemkind.so.0:memkind_default_get_mbind_mode
 libmemkind.so.0:memkind_default_get_mbind_nodemask
 libmemkind.so.0:memkind_default_get_mmap_flags
@@ -57,11 +57,13 @@ libmemkind.so.0:memkind_default_mbind
 libmemkind.so.0:memkind_default_mmap
 libmemkind.so.0:memkind_default_posix_memalign
 libmemkind.so.0:memkind_default_realloc
+libmemkind.so.0:memkind_defrag_reallocate
 libmemkind.so.0:memkind_destroy_kind
 libmemkind.so.0:memkind_detect_kind
 libmemkind.so.0:memkind_error_message
 libmemkind.so.0:memkind_free
 libmemkind.so.0:memkind_get_kind_by_partition
+libmemkind.so.0:memkind_get_stat
 libmemkind.so.0:memkind_get_version
 libmemkind.so.0:memkind_hbw_all_get_mbind_nodemask
 libmemkind.so.0:memkind_hbw_all_hugetlb_init_once
@@ -93,3 +95,4 @@ libmemkind.so.0:memkind_realloc
 libmemkind.so.0:memkind_regular_all_get_mbind_nodemask
 libmemkind.so.0:memkind_set_arena_map_len
 libmemkind.so.0:memkind_thread_get_arena
+libmemkind.so.0:memkind_update_cached_stats
