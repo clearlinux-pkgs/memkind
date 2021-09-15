@@ -4,7 +4,7 @@
 #
 Name     : memkind
 Version  : 1.12.0
-Release  : 7
+Release  : 8
 URL      : https://github.com/memkind/memkind/archive/v1.12.0/memkind-1.12.0.tar.gz
 Source0  : https://github.com/memkind/memkind/archive/v1.12.0/memkind-1.12.0.tar.gz
 Summary  : User Extensible Heap Manager
@@ -83,13 +83,16 @@ man components for the memkind package.
 %prep
 %setup -q -n memkind-1.12.0
 cd %{_builddir}/memkind-1.12.0
+pushd ..
+cp -a memkind-1.12.0 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1631723108
+export SOURCE_DATE_EPOCH=1631723699
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -97,13 +100,24 @@ export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}  || ./build.sh --prefix=/usr --libdir=/usr/lib64
 
+pushd ../buildavx2
+export CFLAGS="$CFLAGS -m64 -march=haswell"
+export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
+export FFLAGS="$FFLAGS -m64 -march=haswell"
+export FCFLAGS="$FCFLAGS -m64 -march=haswell"
+export LDFLAGS="$LDFLAGS -m64 -march=haswell"
+make  %{?_smp_mflags}  || ./build.sh --prefix=/usr --libdir=/usr/lib64
+popd
 
 %install
-export SOURCE_DATE_EPOCH=1631723108
+export SOURCE_DATE_EPOCH=1631723699
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/memkind
 cp %{_builddir}/memkind-1.12.0/COPYING %{buildroot}/usr/share/package-licenses/memkind/94e80186052c71e12fee017b5279c8f8b18c450b
 cp %{_builddir}/memkind-1.12.0/jemalloc/COPYING %{buildroot}/usr/share/package-licenses/memkind/c797cef3f1b13a960a5119a084fb88529a924fd7
+pushd ../buildavx2/
+%make_install_avx2
+popd
 %make_install
 
 %files
@@ -111,6 +125,8 @@ cp %{_builddir}/memkind-1.12.0/jemalloc/COPYING %{buildroot}/usr/share/package-l
 
 %files bin
 %defattr(-,root,root,-)
+/usr/bin/haswell/memkind-auto-dax-kmem-nodes
+/usr/bin/haswell/memkind-hbw-nodes
 /usr/bin/memkind-auto-dax-kmem-nodes
 /usr/bin/memkind-hbw-nodes
 
@@ -122,6 +138,7 @@ cp %{_builddir}/memkind-1.12.0/jemalloc/COPYING %{buildroot}/usr/share/package-l
 /usr/include/memkind_allocator.h
 /usr/include/memkind_deprecated.h
 /usr/include/pmem_allocator.h
+/usr/lib64/haswell/libmemkind.so
 /usr/lib64/libautohbw.so
 /usr/lib64/libmemkind.so
 /usr/lib64/libmemtier.so
@@ -145,6 +162,8 @@ cp %{_builddir}/memkind-1.12.0/jemalloc/COPYING %{buildroot}/usr/share/package-l
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/haswell/libmemkind.so.0
+/usr/lib64/haswell/libmemkind.so.0.0.1
 /usr/lib64/libautohbw.so.0
 /usr/lib64/libautohbw.so.0.0.0
 /usr/lib64/libmemkind.so.0
