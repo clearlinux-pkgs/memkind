@@ -1,19 +1,19 @@
+Configure miss: _malloc_thread_cleanup
+Configure miss: _pthread_mutex_init_calloc_cb
+Configure miss: clang-format
+Configure miss: clang-format-11
 Configure miss: daxctl_dev_get_memory in -ldaxctl
+Configure miss: g++ -std=c++11 option to enable C++11 features
+Configure miss: g++ option to enable C++11 features
+Configure miss: hwloc_memattr_get_best_target in -lhwloc
 Configure miss: if g++ -std=c++11 static flag -static works
+Configure miss: whether Darwin OSAtomic*() is compilable
+Configure miss: whether Darwin os_unfair_lock_*() is compilable
 Configure miss: whether compiler is cray
 Configure miss: whether compiler supports -Wshorten-64-to-32
 Configure miss: whether g++ -std=c++11 supports C++14 features by default
-Configure miss: whether malloc_usable_size definition can use const argument
-Configure miss: whether compiler supports -herror_on_warning
-Configure miss: whether compiler supports -herror_on_warning
-Configure miss: whether compiler supports -herror_on_warning
-Configure miss: whether compiler supports -herror_on_warning
-Configure miss: whether compiler supports -herror_on_warning
-Configure miss: whether utrace(2) is compilable
-Configure miss: dlsym
+Configure miss: whether glibc malloc hook is compilable
+Configure miss: whether glibc memalign hook is compilable
 Configure miss: whether mach_absolute_time() is compilable
-Configure miss: _malloc_thread_cleanup
-Configure miss: _pthread_mutex_init_calloc_cb
-Configure miss: whether Darwin OSAtomic*() is compilable
-Configure miss: whether Darwin os_unfair_lock_*() is compilable
-Configure miss: whether compiler supports -herror_on_warning
+Configure miss: whether malloc_usable_size definition can use const argument
+Configure miss: whether utrace(2) is compilable
