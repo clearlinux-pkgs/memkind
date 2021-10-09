@@ -4,13 +4,14 @@
 #
 Name     : memkind
 Version  : 1.12.0
-Release  : 8
+Release  : 9
 URL      : https://github.com/memkind/memkind/archive/v1.12.0/memkind-1.12.0.tar.gz
 Source0  : https://github.com/memkind/memkind/archive/v1.12.0/memkind-1.12.0.tar.gz
 Summary  : User Extensible Heap Manager
 Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause
 Requires: memkind-bin = %{version}-%{release}
+Requires: memkind-filemap = %{version}-%{release}
 Requires: memkind-lib = %{version}-%{release}
 Requires: memkind-license = %{version}-%{release}
 Requires: memkind-man = %{version}-%{release}
@@ -29,6 +30,7 @@ BuildRequires : pytest
 Summary: bin components for the memkind package.
 Group: Binaries
 Requires: memkind-license = %{version}-%{release}
+Requires: memkind-filemap = %{version}-%{release}
 
 %description bin
 bin components for the memkind package.
@@ -55,10 +57,19 @@ Requires: memkind-man = %{version}-%{release}
 doc components for the memkind package.
 
 
+%package filemap
+Summary: filemap components for the memkind package.
+Group: Default
+
+%description filemap
+filemap components for the memkind package.
+
+
 %package lib
 Summary: lib components for the memkind package.
 Group: Libraries
 Requires: memkind-license = %{version}-%{release}
+Requires: memkind-filemap = %{version}-%{release}
 
 %description lib
 lib components for the memkind package.
@@ -92,7 +103,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1631723699
+export SOURCE_DATE_EPOCH=1633801773
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -101,22 +112,23 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}  || ./build.sh --prefix=/usr --libdir=/usr/lib64
 
 pushd ../buildavx2
-export CFLAGS="$CFLAGS -m64 -march=haswell"
-export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
-export FFLAGS="$FFLAGS -m64 -march=haswell"
-export FCFLAGS="$FCFLAGS -m64 -march=haswell"
-export LDFLAGS="$LDFLAGS -m64 -march=haswell"
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3"
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
 make  %{?_smp_mflags}  || ./build.sh --prefix=/usr --libdir=/usr/lib64
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1631723699
+export SOURCE_DATE_EPOCH=1633801773
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/memkind
 cp %{_builddir}/memkind-1.12.0/COPYING %{buildroot}/usr/share/package-licenses/memkind/94e80186052c71e12fee017b5279c8f8b18c450b
 cp %{_builddir}/memkind-1.12.0/jemalloc/COPYING %{buildroot}/usr/share/package-licenses/memkind/c797cef3f1b13a960a5119a084fb88529a924fd7
 pushd ../buildavx2/
-%make_install_avx2
+%make_install_v3
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 popd
 %make_install
 
@@ -125,10 +137,9 @@ popd
 
 %files bin
 %defattr(-,root,root,-)
-/usr/bin/haswell/memkind-auto-dax-kmem-nodes
-/usr/bin/haswell/memkind-hbw-nodes
 /usr/bin/memkind-auto-dax-kmem-nodes
 /usr/bin/memkind-hbw-nodes
+/usr/share/clear/optimized-elf/bin*
 
 %files dev
 %defattr(-,root,root,-)
@@ -138,7 +149,6 @@ popd
 /usr/include/memkind_allocator.h
 /usr/include/memkind_deprecated.h
 /usr/include/pmem_allocator.h
-/usr/lib64/haswell/libmemkind.so
 /usr/lib64/libautohbw.so
 /usr/lib64/libmemkind.so
 /usr/lib64/libmemtier.so
@@ -160,16 +170,19 @@ popd
 %defattr(0644,root,root,0755)
 %doc /usr/share/doc/memkind/*
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-memkind
+
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/haswell/libmemkind.so.0
-/usr/lib64/haswell/libmemkind.so.0.0.1
 /usr/lib64/libautohbw.so.0
 /usr/lib64/libautohbw.so.0.0.0
 /usr/lib64/libmemkind.so.0
 /usr/lib64/libmemkind.so.0.0.1
 /usr/lib64/libmemtier.so.0
 /usr/lib64/libmemtier.so.0.0.0
+/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
