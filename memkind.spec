@@ -4,7 +4,7 @@
 #
 Name     : memkind
 Version  : 1.12.0
-Release  : 9
+Release  : 10
 URL      : https://github.com/memkind/memkind/archive/v1.12.0/memkind-1.12.0.tar.gz
 Source0  : https://github.com/memkind/memkind/archive/v1.12.0/memkind-1.12.0.tar.gz
 Summary  : User Extensible Heap Manager
@@ -103,7 +103,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1633801773
+export SOURCE_DATE_EPOCH=1633824775
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -121,7 +121,7 @@ make  %{?_smp_mflags}  || ./build.sh --prefix=/usr --libdir=/usr/lib64
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1633801773
+export SOURCE_DATE_EPOCH=1633824775
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/memkind
 cp %{_builddir}/memkind-1.12.0/COPYING %{buildroot}/usr/share/package-licenses/memkind/94e80186052c71e12fee017b5279c8f8b18c450b
