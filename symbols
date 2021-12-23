@@ -39,6 +39,7 @@ libmemkind.so.0:memkind_config_new
 libmemkind.so.0:memkind_config_set_memory_usage_policy
 libmemkind.so.0:memkind_config_set_path
 libmemkind.so.0:memkind_config_set_size
+libmemkind.so.0:memkind_create_fixed
 libmemkind.so.0:memkind_create_kind
 libmemkind.so.0:memkind_create_pmem
 libmemkind.so.0:memkind_create_pmem_with_config
@@ -61,7 +62,11 @@ libmemkind.so.0:memkind_defrag_reallocate
 libmemkind.so.0:memkind_destroy_kind
 libmemkind.so.0:memkind_detect_kind
 libmemkind.so.0:memkind_error_message
+libmemkind.so.0:memkind_fixed_create
+libmemkind.so.0:memkind_fixed_destroy
+libmemkind.so.0:memkind_fixed_mmap
 libmemkind.so.0:memkind_free
+libmemkind.so.0:memkind_get_capacity
 libmemkind.so.0:memkind_get_kind_by_partition
 libmemkind.so.0:memkind_get_stat
 libmemkind.so.0:memkind_get_version
