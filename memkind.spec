@@ -4,7 +4,7 @@
 #
 Name     : memkind
 Version  : 1.13.0
-Release  : 13
+Release  : 14
 URL      : https://github.com/memkind/memkind/archive/v1.13.0/memkind-1.13.0.tar.gz
 Source0  : https://github.com/memkind/memkind/archive/v1.13.0/memkind-1.13.0.tar.gz
 Summary  : User Extensible Heap Manager
