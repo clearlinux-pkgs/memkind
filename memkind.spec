@@ -4,7 +4,7 @@
 #
 Name     : memkind
 Version  : 1.13.0
-Release  : 15
+Release  : 16
 URL      : https://github.com/memkind/memkind/archive/v1.13.0/memkind-1.13.0.tar.gz
 Source0  : https://github.com/memkind/memkind/archive/v1.13.0/memkind-1.13.0.tar.gz
 Summary  : User Extensible Heap Manager
@@ -103,7 +103,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1650557964
+export SOURCE_DATE_EPOCH=1656396562
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -121,7 +121,7 @@ make  %{?_smp_mflags}  || ./build.sh --prefix=/usr --libdir=/usr/lib64
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1650557964
+export SOURCE_DATE_EPOCH=1656396562
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/memkind
 cp %{_builddir}/memkind-1.13.0/COPYING %{buildroot}/usr/share/package-licenses/memkind/94e80186052c71e12fee017b5279c8f8b18c450b
@@ -130,7 +130,7 @@ pushd ../buildavx2/
 %make_install_v3
 popd
 %make_install
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -150,6 +150,9 @@ popd
 /usr/include/memkind_allocator.h
 /usr/include/memkind_deprecated.h
 /usr/include/pmem_allocator.h
+/usr/lib64/glibc-hwcaps/x86-64-v3/libautohbw.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libmemkind.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libmemtier.so
 /usr/lib64/libautohbw.so
 /usr/lib64/libmemkind.so
 /usr/lib64/libmemtier.so
@@ -179,13 +182,18 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/glibc-hwcaps/x86-64-v3/libautohbw.so.0
+/usr/lib64/glibc-hwcaps/x86-64-v3/libautohbw.so.0.0.0
+/usr/lib64/glibc-hwcaps/x86-64-v3/libmemkind.so.0
+/usr/lib64/glibc-hwcaps/x86-64-v3/libmemkind.so.0.0.1
+/usr/lib64/glibc-hwcaps/x86-64-v3/libmemtier.so.0
+/usr/lib64/glibc-hwcaps/x86-64-v3/libmemtier.so.0.0.0
 /usr/lib64/libautohbw.so.0
 /usr/lib64/libautohbw.so.0.0.0
 /usr/lib64/libmemkind.so.0
 /usr/lib64/libmemkind.so.0.0.1
 /usr/lib64/libmemtier.so.0
 /usr/lib64/libmemtier.so.0.0.0
-/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
