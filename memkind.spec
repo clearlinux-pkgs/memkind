@@ -4,7 +4,7 @@
 #
 Name     : memkind
 Version  : 1.14.0
-Release  : 20
+Release  : 21
 URL      : https://github.com/memkind/memkind/archive/v1.14.0/memkind-1.14.0.tar.gz
 Source0  : https://github.com/memkind/memkind/archive/v1.14.0/memkind-1.14.0.tar.gz
 Summary  : User Extensible Heap Manager
@@ -91,6 +91,15 @@ Group: Default
 man components for the memkind package.
 
 
+%package staticdev
+Summary: staticdev components for the memkind package.
+Group: Default
+Requires: memkind-dev = %{version}-%{release}
+
+%description staticdev
+staticdev components for the memkind package.
+
+
 %prep
 %setup -q -n memkind-1.14.0
 cd %{_builddir}/memkind-1.14.0
@@ -103,7 +112,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1657219170
+export SOURCE_DATE_EPOCH=1662596284
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -121,11 +130,11 @@ make  %{?_smp_mflags}  || ./build.sh --prefix=/usr --libdir=/usr/lib64
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1657219170
+export SOURCE_DATE_EPOCH=1662596284
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/memkind
-cp %{_builddir}/memkind-1.14.0/COPYING %{buildroot}/usr/share/package-licenses/memkind/94e80186052c71e12fee017b5279c8f8b18c450b
-cp %{_builddir}/memkind-1.14.0/jemalloc/COPYING %{buildroot}/usr/share/package-licenses/memkind/c797cef3f1b13a960a5119a084fb88529a924fd7
+cp %{_builddir}/memkind-%{version}/COPYING %{buildroot}/usr/share/package-licenses/memkind/94e80186052c71e12fee017b5279c8f8b18c450b
+cp %{_builddir}/memkind-%{version}/jemalloc/COPYING %{buildroot}/usr/share/package-licenses/memkind/c797cef3f1b13a960a5119a084fb88529a924fd7
 pushd ../buildavx2/
 %make_install_v3
 popd
@@ -210,3 +219,9 @@ popd
 /usr/share/man/man7/autohbw.7
 /usr/share/man/man7/libmemtier.7
 /usr/share/man/man7/memtier.7
+
+%files staticdev
+%defattr(-,root,root,-)
+/usr/lib64/glibc-hwcaps/x86-64-v3/libautohbw.a
+/usr/lib64/glibc-hwcaps/x86-64-v3/libmemkind.a
+/usr/lib64/glibc-hwcaps/x86-64-v3/libmemtier.a
